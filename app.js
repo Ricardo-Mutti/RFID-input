@@ -5,8 +5,8 @@ var request = require('request');
 
 
 var manufacturer = 'Sycreader RFID Technology Co., Ltd';
-var machine = 'Sorting';
 var inputUrl = 'http://localhost:8080/v1/';
+var machine = 'Sorting';
 var firstTrigger = true;
 
 var devices = HID.devices();
@@ -53,11 +53,11 @@ function readFunc(err, data) {
 	}
 
 	if(data){
-     RFID.read(readFunc);
+      RFID.read(readFunc);
 	}
 	else{
-	RFID.close();
-	console.log("RFID reader disconnected!");
+	  RFID.close();
+	  console.log("RFID reader disconnected!");
 	}
 
 		}
