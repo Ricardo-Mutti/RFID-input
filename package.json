@@ -1,5 +1,5 @@
 {
-  "name": "Backend-TCC",
+  "name": "Script-Machines",
   "version": "1.0.0",
   "description": "Backend for course conclusion work - Polytechinic of São Paulo 2016",
   "main": "app.js",
@@ -8,14 +8,7 @@
   "author": "Ricardo Mutti (Ricardo-Mutti) and Luis Parma Pires",
   "license": "MIT",
   "dependencies": {
-    "body-parser": "^1.13.3",
-    "cradle": "^0.6.9",
-    "ejs": "^2.3.4",
-    "express": "^4.13.3",
-    "method-override": "^2.3.5",
-    "morgan": "^1.6.1",
     "nodemon": "^1.9.1",
-    "satellizer":"^0.14.0",
     "request":"^2.72.0",
     "node-hid":"^0.5.1"
   }
