@@ -10,7 +10,8 @@
   "dependencies": {
     "nodemon": "^1.9.1",
     "request":"^2.72.0",
-    "node-hid":"^0.5.1"
+    "node-hid":"^0.5.1",
+    "node-opcua":"0.0.57"
   }
 }
 
