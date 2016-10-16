@@ -1,17 +1,21 @@
 {
-  "name": "Script-Machines",
+  "name": "RFID-input",
   "version": "1.0.0",
   "description": "Backend for course conclusion work - Polytechinic of São Paulo 2016",
   "main": "app.js",
   "scripts": {
   },
-  "author": "Ricardo Mutti (Ricardo-Mutti) and Luis Parma Pires",
+  "author": "Ricardo Mutti (Ricardo-Mutti) and Luiz Parma Pires",
   "license": "MIT",
   "dependencies": {
     "nodemon": "^1.9.1",
     "request":"^2.72.0",
-    "node-hid":"^0.5.1",
-    "node-opcua":"0.0.57"
+    "node-hid":"^0.5.1"
   }
 }
+
+
+
+
+
 
