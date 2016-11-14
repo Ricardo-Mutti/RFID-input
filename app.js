@@ -11,39 +11,88 @@ diversas vezes.
 
 var manufacturer = 'Sycreader RFID Technology Co., Ltd';
 var inputUrl = 'http://localhost:8080/v1/';
-var machine = 'Sorting';
 var firstTrigger = true;
 
+
+var RFIDDistributing;
+var RFIDTesting;
+var RFIDHandling;
+var RFIDProcessing;
+var RFIDSorting;
+
+
+
+setInterval(addReaders,1000);
+
+
+//Encontrar leitores RFID
+function addReaders(){
+
+var hasOneReader = false;
 var devices = HID.devices();//Pega todos os HID devices
-var RFID;
-
+let i;
 for(i=0; i<devices.length; i++){
-	var  device = new HID.HID(devices[i].path);
-	//Verificar se o fabricante é o desejado
-	if(device.getDeviceInfo().manufacturer==manufacturer){
-		RFID = device;
-		RFID.write([03, 01]); //Disable sounds and lights
-		RFID.read(readFunc);//Seta a função read como listener
-		console.log('rfid device', RFID.getDeviceInfo());
+	try{
+		var  device = new HID.HID(devices[i].path);
+		console.dir(device,getDeviceInfo());
+	}catch (Error){
+		console.dir("nuuee");
 	}
-}
 
-if(!RFID) {//Caso não tenha devices conectados
-    console.log("No RFID reader devices found");
-    process.exit(0);
-}
+	
+	// Verificar se o fabricante é o desejado
+	if(device != null && device.getDeviceInfo().manufacturer==manufacturer){
+		hasOneReader = true;
+		if(RFIDDistributing==null){
+		   RFIDDistributing = device;
+		   RFIDDistributing.machine ='Distributing';
+		   console.log(RFIDDistributing.machine);
+		}else{
+		  if(RFIDTesting==null){
+		     RFIDTesting = device;
+		     RFIDTesting.machine ='Testing';
+		      console.log(RFIDTesting.machine);
+		     }
+		     // else{	
+		//      	if(RFIDProcessing==null){
+		//           RFIDProcessing = device;
+		//            console.dir(RFIDProcessing.path);
+		//      }else{	
+		   
+		//   }
+	 //   }
+	 }
+  }else{
+  	 if(device==null){
+  		hasOneReader = true;
+   }
+  }
+ }
+   if(i==devices.length && !hasOneReader){
+  	throw new Error("Nenhuma tag RFID conectada!");
+  }
+}		
+    // RFIDArray[j].write([03, 01]); //Disable sounds and lights
+	// RFIDArray[j].read(readFunc(j));//Seta a função read como listener
+	// console.log('rfid device', RFID.getDeviceInfo());
+
+
+// if(!RFIDArray.length==0) {//Caso não tenha devices conectados
+//     console.log("No RFID reader devices found");
+//     process.exit(0);
+// }
 
 function readFunc(err, data) {
- 
+
 	if(firstTrigger && data){
 
 		var isodate = new Date().toISOString();//Pega hora local atual
 		var body = {};//Cria o body da requisição
-		body.inputMachine = machine;
+		body.inputMachine = "Sorting";
 		body.inputDate = isodate;
 
  		request({//Monta o request
-          url: inputUrl + "/register-rfid-input",
+          url: inputUrl + "/register-rfid-input-redes",
           method: "POST",
           json: true,
           body: body},
@@ -60,9 +109,8 @@ function readFunc(err, data) {
 	}
 
 	if(data){//Caso tenha data mantem o listener
-      RFID.read(readFunc);
+      RFIDArray[index].read(readFunc);
 	}else{//Caso contrario o device desconectou
-	  RFID.close();
 	  console.log("RFID reader disconnected!");
 	}
 }
